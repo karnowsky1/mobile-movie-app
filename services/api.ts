@@ -7,6 +7,8 @@ export const TMDB_CONFIG = {
   },
 };
 
+export const BASE_IMAGE_URI = 'https://media.themoviedb.org/t/p/w440_and_h660_face'
+
 export const fetchMovies = async ({ query }: { query: string }) => {
   const endpoint = query
     ? `${TMDB_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
