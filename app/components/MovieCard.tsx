@@ -5,7 +5,6 @@ import { BASE_IMAGE_URI } from '@/services/api'
 import { icons } from '@/constants/icons'
 
 const MovieCard = ({id, poster_path, title, vote_average, release_date}: Movie) => {
-  console.log(`https://image.tmbd.org/t/p/w500${poster_path}`)
   return (
     <Link href={`/movies/${id}`} asChild>
       <TouchableOpacity className='w-[30%]'>
