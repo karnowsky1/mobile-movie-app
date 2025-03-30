@@ -6,11 +6,18 @@ import useFetch from "@/services/useFetch";
 import { fetchMovies } from "@/services/api";
 import { icons } from "@/constants/icons";
 import SearchBar from "../components/SearchBar";
+import { updateSearchCount } from "@/services/appwrite";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data, loading, error, refetch: loadMovies, reset } = useFetch(
+  const {
+    data,
+    loading,
+    error,
+    refetch: loadMovies,
+    reset,
+  } = useFetch(
     () =>
       fetchMovies({
         query: searchQuery,
@@ -19,17 +26,21 @@ const Search = () => {
   );
 
   useEffect(() => {
+    
     // debounce Input Search
     const timeoutId = setTimeout(async () => {
-      if(searchQuery.trim()) {
-        await loadMovies()
+      if (searchQuery.trim()) {
+        await loadMovies(); 
+        if(data?.length > 0 && data?.[0]) {
+          await updateSearchCount(searchQuery, data[0]);
+        } 
       } else {
-        reset()
+        reset();
       }
-    }, 500)
+    }, 500);
 
-    return () => clearTimeout(timeoutId)
-  },[searchQuery])
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
 
   return (
     <View className="flex-1 bg-primary">
